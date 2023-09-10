@@ -2,3 +2,4 @@
 .env
 __pycache__/
 ADILET_bot
+tg_db.sqlite3
