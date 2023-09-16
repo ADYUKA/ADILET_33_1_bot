@@ -12,11 +12,18 @@ class DataBase:
             print("Database connection successfully")
 
         self.connection.execute(sql_queries.CREATE_USER_TABLE_QUERY)
-
+        self.connection.execute(sql_queries.CREATE_ANSWER_BUTTON_TABLE)
 
     def sql_insert_users_command(self, telegram_id, username, first_name, last_name):
         self.cursor.execute(
             sql_queries.INSERT_USER_QUERY,
             (None, telegram_id, username, first_name, last_name,)
+        )
+        self.connection.commit()
+
+    def sql_insert_answer_command(self, tg_id, username, first_answer):
+        self.cursor.execute(
+            sql_queries.INSERT_ANSWER,
+            (None, tg_id, username, first_answer,)
         )
         self.connection.commit()
