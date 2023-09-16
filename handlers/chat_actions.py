@@ -19,6 +19,5 @@ async def message_ban(message: types.Message):
                 )
 
 
-
 def register_chat_actions_handler(dp: Dispatcher):
     dp.register_message_handler(message_ban)
