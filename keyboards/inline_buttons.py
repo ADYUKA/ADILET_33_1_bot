@@ -10,8 +10,14 @@ async def start_keyboard():
         "START QUESTIONNAIRE",
         callback_data="start_questionnaire"
     )
+    form_start_button = InlineKeyboardButton(
+        "REGISTRATION",
+        callback_data="fsm_start"
+    )
     markup.add(
         questionnaire_button
+    ).add(
+        form_start_button
     )
     return markup
 
@@ -30,5 +36,18 @@ async def question_first_keyboard():
         yes_button
     ).add(
         no_button
+    )
+    return markup
+
+
+async def my_profile_keyboard():
+    markup = InlineKeyboardMarkup()
+    profile_button = InlineKeyboardButton(
+        "MY PROFILE",
+        callback_data="my_profile"
+    )
+
+    markup.add(
+        profile_button
     )
     return markup
