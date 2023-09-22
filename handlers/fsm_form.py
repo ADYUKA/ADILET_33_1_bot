@@ -123,13 +123,7 @@ async def load_photo(message: types.Message,
 def register_fsm_form_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(fsm_start,
                                        lambda call: call.data == "fsm_start")
-    # dp.register_message_handler(load_nickname, state=FormStates.nickname, content_types=['text'])
-    # dp.register_message_handler(load_bio, state=FormStates.bio, content_types=['text'])
-    # dp.register_message_handler(load_age, state=FormStates.age, content_types=['text'])
-    # dp.register_message_handler(load_occupation, state=FormStates.occupation, content_types=['text'])
-    # dp.register_message_handler(load_married, state=FormStates.married, content_types=['text'])
-    # dp.register_message_handler(load_photo, state=FormStates.photo,
-    #                             content_types=types.ContentTypes.PHOTO)
+
     dp.register_message_handler(load_nickname, state=FormStates.nickname,
                                 content_types=['text'])
     dp.register_message_handler(load_bio, state=FormStates.bio,

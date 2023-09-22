@@ -78,3 +78,16 @@ class DataBase:
             sql_queries.SELECT_USER_FORM_QUERY,
             (telegram_id,)
         ).fetchall()
+
+    def sql_select_users_report_command(self, username):
+        self.cursor.row_factory = lambda cursor, row: {
+            'id': row[0],
+            'telegram_id': row[1],
+            'username': row[2],
+            'first_name': row[3],
+            'last_name': row[4],
+        }
+        return self.cursor.execute(
+            sql_queries.SELECT_ALL_USERS_QUERY,
+            (username,)
+        ).fetchall()
