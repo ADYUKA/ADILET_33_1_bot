@@ -24,12 +24,19 @@ async def reference_list_owner(call: types.CallbackQuery):
     if reference_list:
         for user in reference_list:
             data.append(f'[{user["referral_id"]}](tg://user?id={user["referral_id"]})')
-    text = '\n'.join(data)
-    await bot.send_message(
-        chat_id=call.from_user.id,
-        text=text,
-        parse_mode=types.ParseMode.MARKDOWN
-    )
+        text = '\n'.join(data)
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text=text,
+            parse_mode=types.ParseMode.MARKDOWN
+        )
+    else:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text='У вас нет рефералов',
+            parse_mode=types.ParseMode.MARKDOWN
+        )
+
 
 async def reference_link_generate(call: types.CallbackQuery):
     token = binascii.hexlify(os.urandom(4)).decode()
