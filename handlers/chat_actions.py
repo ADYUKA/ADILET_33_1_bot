@@ -43,12 +43,6 @@ async def message_ban(message: types.Message):
                     text=f"Hey,{message.from_user.username}, no need to swear, otherwise I'll ban you forever"
                 )
 
-                # await bot.ban_chat_member(
-                #     chat_id=message.chat.id,
-                #     user_id=message.from_user.id,
-                #     until_date=datetime.datetime.now() + datetime.timedelta(minutes=1)
-                # )
-
 
 def register_chat_actions_handler(dp: Dispatcher):
     dp.register_message_handler(message_ban)

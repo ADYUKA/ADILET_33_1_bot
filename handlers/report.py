@@ -59,10 +59,36 @@ async def load_reason(message: types.Message, state: FSMContext):
     await message.reply(
         'Ваша жалоба принята'
     )
-    await state.finish()
+    complain_users = DataBase().sql_select_complain_users_command()
+    print("im here")
+    async with state.proxy() as data:
+        if not complain_users:
+            DataBase().sql_insert_complain_users_command(
+                telegram_id_comp_user=message.from_user.id,
+                telegram_id_bad_user=data['telegram_id'],
+                reason=data['reason']
+            )
+        elif complain_users[0]['count'] >= 3:
+            await bot.send_message(
+                chat_id=data['telegram_id'],
+                text='Вы были забанены, по причине многочисленных жалоб'
+            )
+        # await bot.ban_chat_member(
+        #     chat_id=message.chat.id,
+        #     user_id=message.from_user.id,
+        #     until_date=datetime.datetime.now() + datetime.timedelta(minutes=2)
+        # )
+
+        elif complain_users:
+            print(complain_users)
+            DataBase().sql_update_count_bad_users_command(
+                telegram_id_bad_user=data['telegram_id'],
+            )
+
+        await state.finish()
 
 
-def register_callback_handlers(dp: Dispatcher):
+def register_report_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(report_start_call,
                                        lambda call: call.data == "report_start")
     dp.register_message_handler(load_username, state=ReportStates.username,
