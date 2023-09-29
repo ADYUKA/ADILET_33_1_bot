@@ -3,6 +3,7 @@ from config import bot
 from const import PROFILE_CAPTION_TEXT
 from database.sql_commands import DataBase
 from keyboards.inline_buttons import question_first_keyboard
+from scraper.new_scraper import NewScraper
 
 
 async def start_questionnaire_call(call: types.CallbackQuery):
@@ -58,6 +59,17 @@ async def my_profile_call(call: types.CallbackQuery):
         )
 
 
+async def latest_news_call(call: types.CallbackQuery):
+    scraper = NewScraper()
+    news = scraper.parse_data()
+
+    for link in news:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text=scraper.URL + link
+        )
+
+
 def register_callback_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(start_questionnaire_call,
                                        lambda call: call.data == "start_questionnaire")
@@ -67,3 +79,5 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data == "no_answer")
     dp.register_callback_query_handler(my_profile_call,
                                        lambda call: call.data == "my_profile")
+    dp.register_callback_query_handler(latest_news_call,
+                                       lambda call: call.data == "latest_news")
