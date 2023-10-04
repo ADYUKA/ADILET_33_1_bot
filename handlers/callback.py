@@ -1,8 +1,10 @@
+
 from aiogram import types, Dispatcher
 from config import bot
 from const import PROFILE_CAPTION_TEXT
 from database.sql_commands import DataBase
 from keyboards.inline_buttons import question_first_keyboard
+from scraper.async_scraper import AsyncScraper
 from scraper.new_scraper import NewScraper
 
 
@@ -70,6 +72,19 @@ async def latest_news_call(call: types.CallbackQuery):
         )
 
 
+async def top_cartoons_call(call: types.CallbackQuery):
+
+    scraper = AsyncScraper()
+    cartoons = await scraper.parse_data()
+    print("here", cartoons)
+
+    for cartoon in cartoons:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text=scraper.PLUS_LINK + cartoon
+        )
+
+
 def register_callback_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(start_questionnaire_call,
                                        lambda call: call.data == "start_questionnaire")
@@ -81,3 +96,5 @@ def register_callback_handlers(dp: Dispatcher):
                                        lambda call: call.data == "my_profile")
     dp.register_callback_query_handler(latest_news_call,
                                        lambda call: call.data == "latest_news")
+    dp.register_callback_query_handler(top_cartoons_call,
+                                       lambda call: call.data == "top_cartoons")
