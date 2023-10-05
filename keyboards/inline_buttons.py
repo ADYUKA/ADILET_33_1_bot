@@ -23,11 +23,11 @@ async def start_keyboard():
         callback_data="referral_menu"
     )
     news_button = InlineKeyboardButton(
-        "5 Latest NEWS",
+        "5 Latest NEWS(Temporarily unavailable)",
         callback_data="latest_news"
     )
     top_cartoons_button = InlineKeyboardButton(
-        "TOP 5 CARTOONS",
+        "TOP 5 CARTOONS(Temporarily unavailable)",
         callback_data="top_cartoons"
     )
     markup.add(
